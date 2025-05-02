@@ -28,7 +28,9 @@
 - **Frontend**: HTML5, CSS3, JavaScript, Tailwind CSS
 - **Backend**: -
 - **Деплой**: GitHub Pages / Хостинг ()
-  ![HTML5](https://img.shields.io/badge/HTML5-orange) ![CSS3](https://img.shields.io/badge/HTML5-orange) ![JavaScript](https://img.shields.io/badge/JavaScript-yellow) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-75c1ff)
+
+- 
+ ![HTML5](https://img.shields.io/badge/HTML5-orange) ![CSS3](https://img.shields.io/badge/CSS3-blue) ![JavaScript](https://img.shields.io/badge/JavaScript-yellow) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-75c1ff)
 
 ![GitHub](https://img.shields.io/badge/GitHub-%23696969)
 
