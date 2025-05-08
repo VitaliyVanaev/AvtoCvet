@@ -10,6 +10,17 @@ tailwind.config = {
     }
 };
 
+// module.exports = {
+//     theme: {
+//       extend: {
+//         transitionProperty: {
+//           'height': 'height',
+//           'opacity': 'opacity'
+//         }
+//       }
+//     }
+// }
+
 // Анимация аккордеона
 document.addEventListener('DOMContentLoaded', function() {
     const accordions = document.querySelectorAll('.accordion');
@@ -45,5 +56,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         });
+    });
+
+    // Анимация для карточек контактов
+    document.addEventListener('DOMContentLoaded', function() {
+        const contactCards = document.querySelectorAll('.contact-card');
+        
+        contactCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const icon = card.querySelector('i');
+                if (icon) {
+                    icon.style.transform = 'scale(1.2)';
+                    icon.style.transition = 'transform 0.3s ease';
+                }
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                const icon = card.querySelector('i');
+                if (icon) {
+                    icon.style.transform = 'scale(1)';
+                }
+            });
+        });
+        
     });
 });
