@@ -24,6 +24,12 @@
     background-position: center;
 }
 
+.heroTrowTruck {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("https://avatars.mds.yandex.net/get-altay/8128315/2a000001905e4907e9d23bea25ffd81a7b50/XXXL");
+    background-size: cover;
+    background-position: center;
+}
+
 .contact-card {
     transition: all 0.3s ease;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -63,4 +69,19 @@
 .phone-link:hover {
     color: #bdce0c;
     transform: scale(1.05);
+}
+
+.vehicle-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vehicle-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.service-icon {
+    font-size: 2.5rem;
+    color: #bdce0c;
+    margin-bottom: 1rem;
 }

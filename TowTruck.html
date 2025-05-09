@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Эвакуатор</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="images/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
-    <link rel="shortcut icon" href="images/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="АвтоЦвет" />
-    <link rel="manifest" href="/site.webmanifest" />
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Эвакуатор</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="icon" type="image/png" href="images/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+        <link rel="shortcut icon" href="images/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="АвтоЦвет" />
+        <link rel="manifest" href="/site.webmanifest" />
+    </head>
 <body class="font-sans bg-gray-100">
     <!-- Шапка сайта -->
     <header class="bg-white shadow-md" x-data="{ mobileMenuOpen: false }">
@@ -51,7 +51,312 @@
           </div>
         </div>
       </header>
+        <!-- Герой-секция -->
+        <section class="heroTrowTruck text-white py-20">
+            <div class="container mx-auto px-4 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">Эвакуатор</h1>
+                <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Эвакуация автомобилей и услуги спецтехники</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <!-- Кнопка заказа эвакуатора -->
+                    <a id="orderTruckBtn" href="tel:+79202939922" 
+                       class="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center">
+                        <i class="fas fa-phone-alt mr-2"></i> Заказать эвакуатор
+                    </a>
+                    
+                     <a href="Contacts.html" class="bg-transparent hover:bg-white hover:text-gray-900 text-white font-bold py-3 px-6 border-2 border-white rounded-lg transition duration-300 flex items-center justify-center">
+                Контакты
+                     </a>
+                </div>
+            </div>
+        </section>
+        
+        <script>
+        document.getElementById('orderTruckBtn').addEventListener('click', function(e) {
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            // Если это компьютер
+            if (!isMobile) {
+                e.preventDefault();
+                
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+                modal.innerHTML = `
+                    <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
+                        <h3 class="text-xl font-bold mb-4">Заказ эвакуатора</h3>
+                        <p class="text-gray-700 mb-2">Позвоните нам по номеру:</p>
+                        <p class="text-2xl font-semibold text-primary mb-4">+7 (920) 293-99-22</p>
+                        <div class="text-center">
+                            <button onclick="this.closest('.fixed').remove()" 
+                                    class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+                                Закрыть
+                            </button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            }
+        });
+        </script>
     
+        <!-- Секция с эвакуатором -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="md:w-1/2">
+                        <img src="images/TitleNext.jpg" 
+                             alt="Эвакуатор ГАЗон NEXT" 
+                             class="w-full rounded-lg shadow-lg">
+                    </div>
+                    <div class="md:w-1/2">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6">Услуги эвакуатора в Кстово и Нижегородской области!</h2>
+                        <p class="text-lg text-gray-600 mb-6">
+                            Перевозка спецтехники, легковых ТС, джипов, а также нестандартных грузов. Эвакуация с обочины (оврага).
+                        </p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary mt-1 mr-3"></i>
+                                <span class="text-gray-700">Все районы области</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary mt-1 mr-3"></i>
+                                <span class="text-gray-700">Опытные водители-эвакуаторщики</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary mt-1 mr-3"></i>
+                                <span class="text-gray-700">Грузоподъемность до 5 тонн</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary mt-1 mr-3"></i>
+                                <span class="text-gray-700">Гидроплатформа и лебедка</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Наш автопарк -->
+        <section class="py-16 bg-gray-100">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Наш автопарк</h2>
+                    <div class="w-24 h-1 bg-primary mx-auto"></div>
+                    <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Мы располагаем современным парком спецтехники для решения любых задач по эвакуации</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Карточка 1 -->
+                    <div class="vehicle-card bg-white rounded-lg overflow-hidden shadow-sm">
+                        <img src="images/VALDAI-min.jpg" 
+                             alt="ГАЗ 3310 Валдай" 
+                             class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">ГАЗ 3310 Валдай</h3>
+                            <p class="text-gray-600 mb-4">Эвакуация любой сложности до 3.5 тонн</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-primary font-bold">от 1 500 ₽</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Карточка 2 -->
+                    <div class="vehicle-card bg-white rounded-lg overflow-hidden shadow-sm">
+                        <img src="images/NEXT-min.jpg" 
+                             alt="ГАЗон NEXT" 
+                             class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">ГАЗон NEXT</h3>
+                            <p class="text-gray-600 mb-4">Эвакуация грузовых автомобилей до 5 тонн</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-primary font-bold">от 2 500 ₽</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Карточка 3 -->
+                    <div class="vehicle-card bg-white rounded-lg overflow-hidden shadow-sm">
+                        <img src="images/SUN-min.jpg" 
+                             alt="SUNWARD SWL2810" 
+                             class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">SUNWARD SWL2810</h3>
+                            <p class="text-gray-600 mb-4">Экскаватор с ковшом 1.4 м³ для земляных работ и демонтажа</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-primary font-bold">от 5 000 ₽</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Карточка 4 -->
+                    <div class="vehicle-card bg-white rounded-lg overflow-hidden shadow-sm">
+                        <img src    ="images/GAZ3309-min.jpg"
+                             alt="ГАЗ 3309 цистерна" 
+                             class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">ГАЗ 3309 цистерна</h3>
+                            <p class="text-gray-600 mb-4">Откачка выгребных ям КО-503В-2 3,7 м.куб</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-primary font-bold">от 3 000 ₽</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Наши услуги -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center text-primary mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Наши услуги</h2>
+                    <div class="w-24 h-1 bg-primary mx-auto"></div>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center p-6 rounded-lg hover:bg-gray-50 transition duration-300">
+                        <div class="service-icon">
+                            <i class="fas fa-car-crash"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Эвакуация автомобилей</h3>
+                        <p class="text-gray-600">Быстрая и бережная транспортировка вашего автомобиля к месту ремонта или стоянке</p>
+                    </div>
+                    
+                    <div class="text-center p-6 rounded-lg hover:bg-gray-50 transition duration-300">
+                        <div class="service-icon">
+                            <i class="fas fa-truck-pickup"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Перевозка спецтехники</h3>
+                        <p class="text-gray-600">Транспортировка строительной, сельскохозяйственной и другой спецтехники</p>
+                    </div>
+                    
+                    <div class="text-center p-6 rounded-lg hover:bg-gray-50 transition duration-300">
+                        <div class="service-icon">
+                            <i class="fas fa-road"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Эвакуация с обочины</h3>
+                        <p class="text-gray-600">Спасение автомобилей, съехавших в кювет или застрявших в труднодоступных местах</p>
+                    </div>
+                    
+                    <div class="text-center p-6 rounded-lg hover:bg-gray-50 transition duration-300">
+                        <div class="service-icon">
+                            <i class="fas fa-trailer"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Эвакуация прицепов</h3>
+                        <p class="text-gray-600">Перевозка грузовых и легковых прицепов любой массы</p>
+                    </div>
+                    
+                    <div class="text-center p-6 rounded-lg hover:bg-gray-50 transition duration-300">
+                        <div class="service-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Техническая помощь</h3>
+                        <p class="text-gray-600">Помощь при замене колеса, запуске двигателя и других неисправностях на дороге</p>
+                    </div>
+                    
+                    <div class="text-center p-6 rounded-lg hover:bg-gray-50 transition duration-300">
+                        <div class="service-icon">
+                            <i class="fas fa-car-side"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Перевозка джипов и внедорожников</h3>
+                        <p class="text-gray-600">Специализированная эвакуация автомобилей повышенной проходимости</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Как мы работаем -->
+        <section class="py-16 bg-gray-100">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Как мы работаем</h2>
+                    <div class="w-24 h-1 bg-primary mx-auto"></div>
+                </div>
+                
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+                        <div class="text-4xl font-bold text-primary mb-4">1</div>
+                        <h3 class="text-lg font-semibold mb-2">Заявка</h3>
+                        <p class="text-gray-600">Вы оставляете заявку по телефону или через сайт</p>
+                    </div>
+                    
+                    <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+                        <div class="text-4xl font-bold text-primary mb-4">2</div>
+                        <h3 class="text-lg font-semibold mb-2">Подбор техники</h3>
+                        <p class="text-gray-600">Мы подбираем подходящий эвакуатор для вашего авто</p>
+                    </div>
+                    
+                    <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+                        <div class="text-4xl font-bold text-primary mb-4">3</div>
+                        <h3 class="text-lg font-semibold mb-2">Выезд</h3>
+                        <p class="text-gray-600">Эвакуатор выезжает к вам</p>
+                    </div>
+                    
+                    <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+                        <div class="text-4xl font-bold text-primary mb-4">4</div>
+                        <h3 class="text-lg font-semibold mb-2">Доставка</h3>
+                        <p class="text-gray-600">Безопасная транспортировка авто к указанному месту</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Контакты и карта -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Контакты</h2>
+                    <div class="w-24 h-1 bg-primary mx-auto"></div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <div class="mb-6">
+                            <h3 class="text-xl font-semibold mb-3 text-gray-800">
+                                <i class="fas fa-map-marker-alt text-primary mr-2"></i>
+                                Адрес
+                            </h3>
+                            <p class="text-gray-600">г. Кстово, ул. Шохина, д. 36</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h3 class="text-xl font-semibold mb-3 text-gray-800">
+                                <i class="fas fa-phone-alt text-primary mr-2"></i>
+                                Телефоны
+                            </h3>
+                            <p class="text-gray-600">+7 (920) 043-04-44</p>
+                            <p class="text-gray-600">8 (83145) 9-45-74</p>
+                        </div>
+
+                        <div class="mb-6">
+                            <h3 class="text-xl font-semibold mb-3 text-gray-800">
+                                <i class="fas fa-clock text-primary mr-2"></i>
+                                Режим работы
+                            </h3>
+                            <p class="text-gray-600">Пн-Пт: 8:00 - 18:00</p>
+                            <p class="text-gray-600">Сб: 9:00 - 16:00</p>
+                            <p class="text-gray-600">Вс: Выходной</p>
+                        </div>
+                        
+                        <a href="https://www.google.com/maps/dir//%D1%83%D0%BB.+%D0%A8%D0%BE%D1%85%D0%B8%D0%BD%D0%B0,+36,+%D0%9A%D1%81%D1%82%D0%BE%D0%B2%D0%BE,+%D0%9D%D0%B8%D0%B6%D0%B5%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB.,+607650/@56.150117,44.19789,17z/data=!4m8!4m7!1m0!1m5!1m1!1s0x4150d4a3e0a0a0a1:0x3b0b0b0b0b0b0b0b!2m2!1d44.19789!2d56.150117?entry=ttu" 
+                           target="_blank" 
+                           class="inline-block bg-primary hover:bg-primary/90 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                            <i class="fas fa-route mr-2"></i> Построить маршрут
+                        </a>
+                    </div>
+                    
+                    <div class="h-96 bg-gray-200 rounded-lg overflow-hidden">
+                        <iframe
+                          src="https://maps.google.com/maps?q=56.13980838430599,44.18468662568105&z=17&output=embed&hl=ru&marker=56.13980838430599,44.18468662568105"
+                          width="100%"
+                          height="100%"
+                          style="border:0;"
+                          allowfullscreen=""
+                          loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
     <!-- Подвал -->
     <footer class="bg-logo text-white py-8">
         <div class="container mx-auto px-4">
