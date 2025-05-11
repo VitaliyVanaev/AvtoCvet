@@ -15,6 +15,46 @@
     <meta name="apple-mobile-web-app-title" content="АвтоЦвет" />
     <link rel="manifest" href="/site.webmanifest" />
 </head>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = {
+      name: document.getElementById('name').value,
+      phone: document.getElementById('phone').value,
+      service: document.getElementById('service').value,
+      message: document.getElementById('message').value
+    };
+
+    // Валидация телефона
+    if (!/^[\d\+]{7,15}$/.test(formData.phone)) {
+      alert('Введите корректный телефон');
+      return;
+    }
+
+    const button = e.target.querySelector('button[type="submit"]');
+    button.disabled = true;
+    button.textContent = 'Отправка...';
+
+    // Отправка в Telegram
+    const telegramBotToken = '8138969141:AAFDwK09aUN-oh1vSBc1mOkRku1PAEx8c6U';
+    const chatId = '6469712880';
+    const text = `Новая заявка:\nИмя: ${formData.name}\nТелефон: ${formData.phone}\nУслуга: ${formData.service}\nСообщение: ${formData.message}`;
+    
+    fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`)
+      .then(() => {
+        alert('Сообщение отправлено!');
+        document.getElementById('contactForm').reset();
+      })
+      .catch(() => alert('Ошибка отправки'))
+      .finally(() => {
+        button.disabled = false;
+        button.textContent = 'Отправить сообщение';
+      });
+  });
+});
+</script>
 <body class="font-sans bg-gray-100">
     <!-- Шапка сайта -->
     <header class="bg-white shadow-md" x-data="{ mobileMenuOpen: false }">
@@ -114,7 +154,7 @@
             
             <div class="max-w-4xl mx-auto">
                 <!-- Аккордеон 1 - Материалы для кузовного ремонта -->
-                <div class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
+                <div id="accordion1" class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
                     <button class="accordion-header w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition duration-200">
                         <h3 class="text-xl font-semibold text-gray-800">
                             <i class="fas fa-car-crash text-primary mr-3"></i>
@@ -144,7 +184,7 @@
                 </div>
                 
                 <!-- Аккордеон 2 - Масла -->
-                <div class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
+                <div id="accordion2" class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
                     <button class="accordion-header w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition duration-200">
                         <h3 class="text-xl font-semibold text-gray-800">
                             <i class="fas fa-oil-can text-primary mr-3"></i>
@@ -174,7 +214,7 @@
                 </div>
                 
                 <!-- Аккордеон 3 - Фильтра -->
-                <div class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
+                <div id="accordion3" class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
                     <button class="accordion-header w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition duration-200">
                         <h3 class="text-xl font-semibold text-gray-800">
                             <i class="fas fa-filter text-primary mr-3"></i>
@@ -204,7 +244,7 @@
                 </div>
                 
                 <!-- Аккордеон 4 - Химия -->
-                <div class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
+                <div id="accordion4" class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
                     <button class="accordion-header w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition duration-200">
                         <h3 class="text-xl font-semibold text-gray-800">
                             <i class="fas fa-flask text-primary mr-3"></i>
@@ -234,7 +274,7 @@
                 </div>
                 
                 <!-- Аккордеон 5 - Автозапчасти -->
-                <div class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
+                <div id="accordion5" class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
                     <button class="accordion-header w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition duration-200">
                         <h3 class="text-xl font-semibold text-gray-800">
                             <i class="fas fa-cogs text-primary mr-3"></i>
@@ -264,7 +304,7 @@
                 </div>
                 
                 <!-- Аккордеон 6 - Автосвет -->
-                <div class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
+                <div id="accordion6" class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
                     <button class="accordion-header w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition duration-200">
                         <h3 class="text-xl font-semibold text-gray-800">
                             <i class="fas fa-lightbulb text-primary mr-3"></i>
@@ -294,7 +334,7 @@
                 </div>
                 
                 <!-- Аккордеон 7 - Средства индивидуальной защиты -->
-                <div class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
+                <div id="accordion7" class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
                     <button class="accordion-header w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition duration-200">
                         <h3 class="text-xl font-semibold text-gray-800">
                             <i class="fas fa-hard-hat text-primary mr-3"></i>
@@ -324,7 +364,7 @@
                 </div>
                 
                 <!-- Аккордеон 8 - Подбор автоэмали -->
-                <div class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
+                <div id="accordion8" class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
                     <button class="accordion-header w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition duration-200">
                         <h3 class="text-xl font-semibold text-gray-800">
                             <i class="fas fa-paint-roller text-primary mr-3"></i>
@@ -354,7 +394,7 @@
                 </div>
                 
                 <!-- Аккордеон 9 - Автомобильные чехлы -->
-                <div class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
+                <div id="accordion9" class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
                     <button class="accordion-header w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition duration-200">
                         <h3 class="text-xl font-semibold text-gray-800">
                             <i class="fas fa-car text-primary mr-3"></i>
@@ -432,13 +472,15 @@
 
     <!-- Контакты и карта -->
     <section class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Контакты</h2>
-                <div class="w-24 h-1 bg-primary mx-auto"></div>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-8 items-center">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Контакты</h2>
+            <div class="w-24 h-1 bg-primary mx-auto"></div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Левая колонка - контактная информация и карта -->
+            <div class="space-y-8">
                 <div>
                     <div class="mb-6">
                         <h3 class="text-xl font-semibold mb-3 text-gray-800">
@@ -466,6 +508,14 @@
                         <p class="text-gray-600">Сб: 9:00 - 16:00</p>
                         <p class="text-gray-600">Вс: Выходной</p>
                     </div>
+
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold mb-3 text-gray-800">
+                            <i class="fas fa-truck-pickup text-primary mr-2"></i>
+                            Эвакуатор
+                        </h3>
+                        <p class="text-gray-600">Пн-Вс: 8:00 - 19:00</p>
+                    </div>
                     
                     <a href="https://www.google.com/maps/dir//%D1%83%D0%BB.+%D0%A8%D0%BE%D1%85%D0%B8%D0%BD%D0%B0,+36,+%D0%9A%D1%81%D1%82%D0%BE%D0%B2%D0%BE,+%D0%9D%D0%B8%D0%B6%D0%B5%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D1%81%D0%BA%D0%B0%D1%8F+%D0%BE%D0%B1%D0%BB.,+607650/@56.150117,44.19789,17z/data=!4m8!4m7!1m0!1m5!1m1!1s0x4150d4a3e0a0a0a1:0x3b0b0b0b0b0b0b0b!2m2!1d44.19789!2d56.150117?entry=ttu" 
                        target="_blank" 
@@ -485,6 +535,46 @@
                     </iframe>
                 </div>
             </div>
+            
+            <!-- Правая колонка - форма и соцсети -->
+            <div class="space-y-8">
+                <div class="bg-white rounded-xl p-6 shadow-md">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Напишите нам</h2>
+                    <form id="contactForm">
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 mb-2">Ваше имя</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                            
+                        <div class="mb-4">
+                            <label for="phone" class="block text-gray-700 mb-2">Телефон</label>
+                            <input type="tel" id="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                            
+                        <div class="mb-4">
+                            <label for="service" class="block text-gray-700 mb-2">Услуга</label>
+                            <select id="service" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <option value="">Выберите услугу</option>
+                                <option value="parts">Запчасти</option>
+                                <option value="service">Автосервис</option>
+                                <option value="evacuator">Эвакуатор</option>
+                                <option value="sandblasting">Пескоструй</option>
+                                <option value="coloring">Подбор цвета</option>
+                                <option value="other">Другое</option>
+                            </select>
+                        </div>
+                            
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 mb-2">Сообщение</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+                        </div>
+                            
+                        <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                            Отправить сообщение
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -500,10 +590,11 @@
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Категории</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-primary">Материалы для кузовного ремонта</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-primary">Масла и фильтры</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-primary">Автозапчасти</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-primary">Автохимия</a></li>
+                        <li><a href="index.html#accordion1" class="text-gray-400 hover:text-primary">Материалы для кузовного ремонта</a></li>
+                        <li><a href="index.html#accordion2" class="text-gray-400 hover:text-primary">Масла</a></li>
+                        <li><a href="index.html#accordion5" class="text-gray-400 hover:text-primary">Автозапчасти</a></li>
+                        <li><a href="AutoService.html#sandblasting1" class="text-gray-400 hover:text-primary">Пескоструй</a></li>
+                        <li><a href="TowTruck.html#TowTruck1" class="text-gray-400 hover:text-primary">Эвакуатор</a></li>
                     </ul>
                 </div>
                 
