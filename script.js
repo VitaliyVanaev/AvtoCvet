@@ -1,4 +1,4 @@
-// Конфигурация Tailwind (если нужно)
+// Конфигурация Tailwind
 tailwind.config = {
     theme: {
         extend: {
