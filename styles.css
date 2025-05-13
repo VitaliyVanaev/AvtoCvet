@@ -19,13 +19,13 @@
 }
 
 .hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("images/HendaiTushkan.jpg");
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("images/HendaiTushkan.jpg?v=2");
     background-size: cover;
     background-position: center;
 }
 
 .heroTrowTruck {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("images/HeroNext.jpg");
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("images/HeroNext.jpg?v=2");
     background-size: cover;
     background-position: center;
 }
@@ -87,7 +87,7 @@
 }
 
 .heroAutoService {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('images/heroService.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('images/heroService.jpg?v=2');
     background-size: cover;
     background-position: center;
 }
