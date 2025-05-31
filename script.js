@@ -1,3 +1,5 @@
+setInterval(renderProducts, 300000);
+
 // Конфигурация Tailwind
 tailwind.config = {
     theme: {
@@ -20,6 +22,9 @@ tailwind.config = {
 //       }
 //     }
 // }
+
+
+
 
 // Анимация аккордеона
 document.addEventListener('DOMContentLoaded', function() {
