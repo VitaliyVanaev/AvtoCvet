@@ -1,4 +1,4 @@
-setInterval(renderProducts, 300000);
+// setInterval(renderProducts, 300000);
 
 // Конфигурация Tailwind
 tailwind.config = {
