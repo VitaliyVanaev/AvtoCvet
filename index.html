@@ -146,17 +146,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <!-- Каталог товаров -->
     <section class="py-16 bg-gray-100">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Каталог товаров</h2>
-                <div class="w-24 h-1 bg-primary mx-auto"></div>
-            </div>
-            
-            <div class="max-w-4xl mx-auto" id="products-container">
-
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Каталог товаров</h2>
+            <div class="w-24 h-1 bg-primary mx-auto"></div>
+        </div>
+        
+        <div class="max-w-4xl mx-auto" id="products-container">
+            <!-- Лоадер -->
+            <div id="loader" class="flex flex-col items-center justify-center py-12">
+                <div class="spinner"></div>
+                <span class="mt-4 text-gray-600 text-lg">Загрузка товаров...</span>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Блок услуг эвакуатора -->
     <section class="truck-bg text-white py-16">
