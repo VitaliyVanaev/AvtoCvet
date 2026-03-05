@@ -1,12 +1,27 @@
 .accordion-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease-out;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);  /* быстрее закрытие */
+    background-color: #f9fafb;
 }
 
 .accordion.active .accordion-content {
-    max-height: 1000px;
-    transition: max-height 0.5s ease-in;
+    max-height: 2000px;
+    transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);  /* медленнее открытие */
+}
+
+/* Иконка - синхронизируем с закрытием */
+.accordion-header .fa-chevron-down {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordion.active .accordion-header .fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+/* Иконка категории слева НЕ должна поворачиваться */
+.accordion-header .text-primary {
+    transition: none;
 }
 
 .product-card {

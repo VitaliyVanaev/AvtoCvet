@@ -13,12 +13,63 @@ const CATEGORY_ICONS = {
     'Автомобильные чехлы': 'fa-car'
 };
 
+// ========== НАСТРОЙКИ КЭШИРОВАНИЯ ==========
+const CACHE_KEYS = {
+    PRODUCTS: 'avtocvet_products_cache',
+    TIMESTAMP: 'avtocvet_cache_timestamp'
+};
+const CACHE_DURATION = 30 * 60 * 1000; // 30 минут
+
+// ========== ФУНКЦИИ КЭШИРОВАНИЯ ==========
+function saveToCache(products) {
+    try {
+        localStorage.setItem(CACHE_KEYS.PRODUCTS, JSON.stringify(products));
+        localStorage.setItem(CACHE_KEYS.TIMESTAMP, Date.now().toString());
+        console.log('✅ Данные сохранены в кэш');
+    } catch (error) {
+        console.error('❌ Ошибка при сохранении в кэш:', error);
+    }
+}
+
+function loadFromCache() {
+    try {
+        const cachedData = localStorage.getItem(CACHE_KEYS.PRODUCTS);
+        const cachedTime = localStorage.getItem(CACHE_KEYS.TIMESTAMP);
+        
+        if (!cachedData || !cachedTime) return null;
+        
+        const now = Date.now();
+        const timeDiff = now - parseInt(cachedTime);
+        
+        if (timeDiff > CACHE_DURATION) {
+            console.log('⏰ Кэш устарел');
+            clearCache();
+            return null;
+        }
+        
+        console.log('📦 Данные загружены из кэша');
+        return JSON.parse(cachedData);
+        
+    } catch (error) {
+        console.error('❌ Ошибка при загрузке из кэша:', error);
+        return null;
+    }
+}
+
+function clearCache() {
+    try {
+        localStorage.removeItem(CACHE_KEYS.PRODUCTS);
+        localStorage.removeItem(CACHE_KEYS.TIMESTAMP);
+        console.log('🧹 Кэш очищен');
+    } catch (error) {
+        console.error('❌ Ошибка при очистке кэша:', error);
+    }
+}
+
 // ========== УПРАВЛЕНИЕ ЛОАДЕРОМ ==========
 function showLoader() {
     const loader = document.getElementById('loader');
-    const container = document.getElementById('products-container');
     if (loader) loader.style.display = 'flex';
-    if (container) container.style.opacity = '1';
 }
 
 function hideLoader() {
@@ -27,7 +78,7 @@ function hideLoader() {
 }
 
 // ========== ЗАГРУЗКА ДАННЫХ ==========
-async function fetchProducts() {
+async function fetchProductsFromAPI() {
     try {
         const response = await fetch(API_URL);
         if (!response.ok) throw new Error(`Ошибка HTTP: ${response.status}`);
@@ -38,7 +89,30 @@ async function fetchProducts() {
             product.is_active !== 'Неактивен'
         );
     } catch (error) {
-        console.error('Ошибка загрузки:', error);
+        console.error('❌ Ошибка загрузки из API:', error);
+        throw error;
+    }
+}
+
+async function fetchProducts() {
+    try {
+        const cachedProducts = loadFromCache();
+        
+        if (cachedProducts && cachedProducts.length > 0) {
+            return cachedProducts;
+        }
+        
+        console.log('🌐 Загружаем данные из API');
+        const freshProducts = await fetchProductsFromAPI();
+        
+        if (freshProducts && freshProducts.length > 0) {
+            saveToCache(freshProducts);
+        }
+        
+        return freshProducts;
+        
+    } catch (error) {
+        console.error('❌ Ошибка загрузки товаров:', error);
         return [];
     }
 }
@@ -58,25 +132,28 @@ function getCategoryDescription(category) {
     return descriptions[category] || 'Товары высшего качества с гарантией производителя.';
 }
 
-// ========== ИНИЦИАЛИЗАЦИЯ АККОРДЕОНОВ ==========
+// ========== АККОРДЕОНЫ - РАБОЧАЯ ВЕРСИЯ ==========
 function initAccordions() {
-    document.querySelectorAll('.accordion-header').forEach(header => {
-        header.addEventListener('click', function() {
+    console.log('🔄 Инициализация аккордеонов...');
+    
+    document.querySelectorAll('.accordion-header').forEach((header, index) => {
+        // Убираем все старые обработчики
+        header.replaceWith(header.cloneNode(true));
+    });
+    
+    // Заново получаем все заголовки после replaceWith
+    document.querySelectorAll('.accordion-header').forEach((header, index) => {
+        header.addEventListener('click', function(e) {
+            e.preventDefault();
             const accordion = this.closest('.accordion');
-            accordion.classList.toggle('active');
             
-            const icon = this.querySelector('.fa-chevron-down');
-            if (icon) {
-                icon.style.transform = accordion.classList.contains('active') 
-                    ? 'rotate(180deg)' 
-                    : 'rotate(0deg)';
-            }
-            
-            const content = accordion.querySelector('.accordion-content');
-            if (content) {
-                content.style.maxHeight = accordion.classList.contains('active')
-                    ? content.scrollHeight + "px"
-                    : null;
+            // Просто переключаем класс
+            if (accordion.classList.contains('active')) {
+                accordion.classList.remove('active');
+                console.log(`Аккордеон ${index + 1} закрыт`);
+            } else {
+                accordion.classList.add('active');
+                console.log(`Аккордеон ${index + 1} открыт`);
             }
         });
     });
@@ -87,7 +164,6 @@ function displayProducts(products) {
     const container = document.getElementById('products-container');
     if (!container) return;
 
-    // Прячем лоадер
     hideLoader();
 
     if (products.length === 0) {
@@ -134,27 +210,42 @@ function displayProducts(products) {
         </div>
     `).join('');
 
-    // Инициализируем аккордеоны после добавления в DOM
-    initAccordions();
+    // Инициализируем аккордеоны
+    setTimeout(initAccordions, 100);
 }
 
 // ========== ОСНОВНАЯ ФУНКЦИЯ ==========
 async function loadCatalog() {
-    // Показываем лоадер
-    showLoader();
-    
     try {
-        // Загружаем данные
-        const products = await fetchProducts();
+        showLoader();
         
-        // Искусственная задержка для демонстрации (можно убрать)
-        await new Promise(resolve => setTimeout(resolve, 800));
+        const cachedProducts = loadFromCache();
         
-        // Отображаем товары
-        displayProducts(products);
+        if (cachedProducts && cachedProducts.length > 0) {
+            console.log('🚀 Быстрая загрузка из кэша');
+            displayProducts(cachedProducts);
+            
+            setTimeout(async () => {
+                try {
+                    const freshProducts = await fetchProductsFromAPI();
+                    if (freshProducts && freshProducts.length > 0) {
+                        if (JSON.stringify(freshProducts) !== JSON.stringify(cachedProducts)) {
+                            saveToCache(freshProducts);
+                            console.log('🔄 Кэш обновлен в фоне');
+                        }
+                    }
+                } catch (error) {
+                    console.error('❌ Ошибка фонового обновления:', error);
+                }
+            }, 1000);
+        } else {
+            console.log('🌐 Первая загрузка из API');
+            const products = await fetchProducts();
+            displayProducts(products);
+        }
         
     } catch (error) {
-        console.error('Ошибка:', error);
+        console.error('❌ Критическая ошибка:', error);
         hideLoader();
         document.getElementById('products-container').innerHTML = `
             <div class="text-center py-8">
