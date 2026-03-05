@@ -1,5 +1,3 @@
-// setInterval(renderProducts, 300000);
-
 // Конфигурация Tailwind
 tailwind.config = {
     theme: {
@@ -12,77 +10,42 @@ tailwind.config = {
     }
 };
 
-// module.exports = {
-//     theme: {
-//       extend: {
-//         transitionProperty: {
-//           'height': 'height',
-//           'opacity': 'opacity'
-//         }
-//       }
-//     }
-// }
+// Плавная прокрутка для якорных ссылок
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
 
-
-
-
-// Анимация аккордеона
+// Анимация для карточек контактов
 document.addEventListener('DOMContentLoaded', function() {
-    const accordions = document.querySelectorAll('.accordion');
+    const contactCards = document.querySelectorAll('.contact-card');
     
-    accordions.forEach(accordion => {
-        const header = accordion.querySelector('.accordion-header');
-        const icon = header.querySelector('.fa-chevron-down');
-        
-        header.addEventListener('click', () => {
-            accordion.classList.toggle('active');
-            
-            if (accordion.classList.contains('active')) {
-                icon.style.transform = 'rotate(180deg)';
-            } else {
-                icon.style.transform = 'rotate(0deg)';
+    contactCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            const icon = card.querySelector('i');
+            if (icon) {
+                icon.style.transform = 'scale(1.2)';
+                icon.style.transition = 'transform 0.3s ease';
             }
         });
-    });
-    
-    // Плавная прокрутка для якорных ссылок
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
-                });
+        
+        card.addEventListener('mouseleave', () => {
+            const icon = card.querySelector('i');
+            if (icon) {
+                icon.style.transform = 'scale(1)';
             }
         });
-    });
-
-    // Анимация для карточек контактов
-    document.addEventListener('DOMContentLoaded', function() {
-        const contactCards = document.querySelectorAll('.contact-card');
-        
-        contactCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                const icon = card.querySelector('i');
-                if (icon) {
-                    icon.style.transform = 'scale(1.2)';
-                    icon.style.transition = 'transform 0.3s ease';
-                }
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                const icon = card.querySelector('i');
-                if (icon) {
-                    icon.style.transform = 'scale(1)';
-                }
-            });
-        });
-        
     });
 });

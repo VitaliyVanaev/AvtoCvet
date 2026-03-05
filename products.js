@@ -18,9 +18,8 @@ const CACHE_KEYS = {
     PRODUCTS: 'avtocvet_products_cache',
     TIMESTAMP: 'avtocvet_cache_timestamp'
 };
-const CACHE_DURATION = 30 * 60 * 1000; // 30 минут
+const CACHE_DURATION = 30 * 60 * 1000;
 
-// ========== ФУНКЦИИ КЭШИРОВАНИЯ ==========
 function saveToCache(products) {
     try {
         localStorage.setItem(CACHE_KEYS.PRODUCTS, JSON.stringify(products));
@@ -132,33 +131,6 @@ function getCategoryDescription(category) {
     return descriptions[category] || 'Товары высшего качества с гарантией производителя.';
 }
 
-// ========== АККОРДЕОНЫ - РАБОЧАЯ ВЕРСИЯ ==========
-function initAccordions() {
-    console.log('🔄 Инициализация аккордеонов...');
-    
-    document.querySelectorAll('.accordion-header').forEach((header, index) => {
-        // Убираем все старые обработчики
-        header.replaceWith(header.cloneNode(true));
-    });
-    
-    // Заново получаем все заголовки после replaceWith
-    document.querySelectorAll('.accordion-header').forEach((header, index) => {
-        header.addEventListener('click', function(e) {
-            e.preventDefault();
-            const accordion = this.closest('.accordion');
-            
-            // Просто переключаем класс
-            if (accordion.classList.contains('active')) {
-                accordion.classList.remove('active');
-                console.log(`Аккордеон ${index + 1} закрыт`);
-            } else {
-                accordion.classList.add('active');
-                console.log(`Аккордеон ${index + 1} открыт`);
-            }
-        });
-    });
-}
-
 // ========== ОТОБРАЖЕНИЕ ТОВАРОВ ==========
 function displayProducts(products) {
     const container = document.getElementById('products-container');
@@ -171,7 +143,6 @@ function displayProducts(products) {
         return;
     }
 
-    // Группировка по категориям
     const categories = products.reduce((groups, product) => {
         const cat = product.category || 'Другие товары';
         if (!groups[cat]) groups[cat] = [];
@@ -179,39 +150,53 @@ function displayProducts(products) {
         return groups;
     }, {});
 
-    // Генерация HTML аккордеонов
-    container.innerHTML = Object.entries(categories).map(([category, items]) => `
-        <div class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
-            <button class="accordion-header w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition duration-200">
-                <h3 class="text-xl font-semibold text-gray-800">
-                    <i class="fas ${CATEGORY_ICONS[category] || 'fa-tag'} text-primary mr-3"></i>
-                    ${category}
-                </h3>
-                <i class="fas fa-chevron-down text-primary transition-transform duration-300"></i>
-            </button>
-            <div class="accordion-content">
-                <div class="p-6 pt-0">
-                    <div class="grid md:grid-cols-2 gap-6 mb-6">
-                        ${items.map(item => `
-                            <div class="product-card bg-gray-50 p-4 rounded-lg transition hover:shadow-md">
-                                <img src="${item.image || 'images/placeholder.jpg'}" 
-                                     alt="${item.name}" 
-                                     class="w-full h-48 object-cover rounded-md mb-3"
-                                     onerror="this.src='images/placeholder.jpg'">
-                                <h4 class="font-bold text-lg mb-2">${item.name}</h4>
-                                <p class="text-gray-600 mb-3">${item.description || 'Описание отсутствует'}</p>
-                                <span class="text-primary font-bold">${item.price ? `${item.price} ₽` : 'Цена по запросу'}</span>
-                            </div>
-                        `).join('')}
+    // Массив для соответствия категорий и ID
+    const categoryToId = {
+        'Материалы для кузовного ремонта': 'accordion1',
+        'Масла': 'accordion2',
+        'Фильтра': 'accordion3',
+        'Автохимия': 'accordion4',
+        'Автозапчасти': 'accordion5',
+        'Автосвет': 'accordion6',
+        'Средства индивидуальной защиты': 'accordion7',
+        'Автоэмаль': 'accordion8',
+        'Автомобильные чехлы': 'accordion9'
+    };
+
+    // Генерируем HTML с ID и прямым onclick
+    container.innerHTML = Object.entries(categories).map(([category, items]) => {
+        const accordionId = categoryToId[category] || `accordion-${category.toLowerCase().replace(/\s+/g, '-')}`;
+        
+        return `
+            <div id="${accordionId}" class="accordion mb-4 bg-white rounded-lg overflow-hidden shadow-md">
+                <button class="accordion-header w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition duration-200" onclick="this.closest('.accordion').classList.toggle('active')">
+                    <h3 class="text-xl font-semibold text-gray-800">
+                        <i class="fas ${CATEGORY_ICONS[category] || 'fa-tag'} text-primary mr-3"></i>
+                        ${category}
+                    </h3>
+                    <i class="fas fa-chevron-down text-primary transition-transform duration-300"></i>
+                </button>
+                <div class="accordion-content">
+                    <div class="p-6 pt-0">
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            ${items.map(item => `
+                                <div class="product-card bg-gray-50 p-4 rounded-lg transition hover:shadow-md">
+                                    <img src="${item.image || 'images/placeholder.jpg'}" 
+                                         alt="${item.name}" 
+                                         class="w-full h-48 object-cover rounded-md mb-3"
+                                         onerror="this.src='images/placeholder.jpg'">
+                                    <h4 class="font-bold text-lg mb-2">${item.name}</h4>
+                                    <p class="text-gray-600 mb-3">${item.description || 'Описание отсутствует'}</p>
+                                    <span class="text-primary font-bold">${item.price ? `${item.price} ₽` : 'Цена по запросу'}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <p class="text-gray-700">${getCategoryDescription(category)}</p>
                     </div>
-                    <p class="text-gray-700">${getCategoryDescription(category)}</p>
                 </div>
             </div>
-        </div>
-    `).join('');
-
-    // Инициализируем аккордеоны
-    setTimeout(initAccordions, 100);
+        `;
+    }).join('');
 }
 
 // ========== ОСНОВНАЯ ФУНКЦИЯ ==========
@@ -258,3 +243,15 @@ async function loadCatalog() {
 
 // ========== ЗАПУСК ==========
 document.addEventListener('DOMContentLoaded', loadCatalog);
+
+// Конфигурация Tailwind
+tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                primary: '#bdce0c',
+                logo: '#2c391d',
+            }
+        }
+    }
+};
